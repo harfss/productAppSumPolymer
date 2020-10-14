@@ -1,0 +1,100 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="product-service-element">
+  <template>
+    <style>
+      :host {
+        display: inline-flex;     
+        height: 75px;    
+      }
+
+      .card-item{
+        border: 2;
+        border-radius: 5%;
+        background-color:lightgrey; 
+        color:black;
+        padding: 3px; 
+      }
+      .align-name-quantity{
+        display: inline-flex; 
+        height: 70%;     
+      }
+      .align-just-name{
+        height: 70%;     
+      }
+      .style-font-expiration{
+        font-size: 13px;
+        color:red;
+        text-align: center;
+        height: 30%;   
+      }
+
+      .style-quantity{
+        font-size: 22px;
+        font-weight: bold;
+        padding: 5px;          
+        vertical-align: center;
+      }
+      .style-name-product{
+        font-size: 16px;
+        padding: 5px;          
+        vertical-align: center;
+      }
+    </style>
+   	<div class="card-item"> 
+      <template is="dom-if" if="{{_thereisQuantity}}">
+        <div class="align-name-quantity">
+          <div class="style-quantity">{{quantity}}</div>
+          <div class="style-name-product">{{name}}</div>
+        </div>
+      </template>        
+      
+      <template is="dom-if" if="{{!_thereisQuantity}}">
+        <div class="align-just-name">
+          <div class="style-name-product">{{name}}</div>
+        </div>
+      </template>
+      <div class="style-font-expiration">{{expiration}}</div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `product-service-element`
+     * Descripcion del producto o servicio
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ProductServiceElement extends Polymer.Element {
+      static get is() { return 'product-service-element'; }
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },
+          quantity: {
+            type: Number
+          },
+          expiration: {
+            type: String
+          },
+          showQuantity:{
+            type:Boolean,
+            value:false
+          }
+        };
+      }
+
+      connectedCallback(){
+        super.connectedCallback();
+        console.log('si entra...', this.quantity > 0)
+        if(this.quantity > 0)
+          this.set('showQuantity', true);
+      }
+    }
+
+    window.customElements.define(ProductServiceElement.is, ProductServiceElement);
+  </script>
+</dom-module>
